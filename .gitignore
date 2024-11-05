@@ -12,9 +12,8 @@ wheels/
 # Visual Studio Code Config
 .vscode
 
-# data for parsing
-data/*
-!data/TextMap_aio.tsv
+# Item data
+extracted/
 
-# parsed items
+# Parsed items
 parsed/

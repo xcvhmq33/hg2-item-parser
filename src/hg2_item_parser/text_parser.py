@@ -1,3 +1,4 @@
+import importlib.resources
 import re
 from typing import Literal
 
@@ -7,7 +8,10 @@ from .tsvreader import TSVReader
 
 
 class TextParser:
-    textmap = TSVReader("data/TextMap_aio.tsv")
+    with importlib.resources.path(
+        "hg2_item_parser.resources", "TextMap_aio.tsv"
+    ) as resource_path:
+        textmap = TSVReader(resource_path)
     en_re_url = "http://ggz.amaryllisworks.pw:18880/en_re"
     en_re: dict[str, str] = requests.get(en_re_url).json()
 
