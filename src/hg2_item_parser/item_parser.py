@@ -31,7 +31,10 @@ class ItemParser:
     def parse_items_from_to(self, first_item_id: int, last_item_id: int) -> list[Item]:
         items = []
         for item_id in range(first_item_id, last_item_id + 1):
-            item = self.parse_item(item_id)
+            try:
+                item = self.parse_item(item_id)
+            except ItemNotFoundError:
+                continue
             items.append(item)
 
         return items
