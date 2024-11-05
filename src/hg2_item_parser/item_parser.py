@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from tqdm import tqdm
+
 from .exceptions import ItemNotFoundError
 from .info_parser import InfoParser
 from .models import Item, ItemInfo, ItemProperty, ItemSkill
@@ -30,7 +32,7 @@ class ItemParser:
 
     def parse_items_from_to(self, first_item_id: int, last_item_id: int) -> list[Item]:
         items = []
-        for item_id in range(first_item_id, last_item_id + 1):
+        for item_id in tqdm(range(first_item_id, last_item_id + 1), desc="Parsing..."):
             try:
                 item = self.parse_item(item_id)
             except ItemNotFoundError:
