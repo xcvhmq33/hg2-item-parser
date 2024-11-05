@@ -76,4 +76,4 @@ class Item:
         border = "-" * 15
         skills_str = f"\n{border}\n".join(str(skill) for skill in self.skills)
 
-        return f"INFO{self.info}\n\nPROPERTY{self.property}\n\nSKILLS{skills_str or "\nNone"}"
+        return f"INFO\n{self.info}\n\nPROPERTY\n{self.property}\n\nSKILLS\n{skills_str or None}"
