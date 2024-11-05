@@ -35,6 +35,7 @@ def parse_from_to(
     output_file_path: Annotated[str, typer.Argument()] = "parsed/items.txt",
     data_dir_path: Annotated[str, typer.Argument()] = "extracted",
 ) -> None:
+    Path(output_file_path).parent.mkdir(parents=True, exist_ok=True)
     parser = ItemParser(data_dir_path)
     if ask_overwrite_if_exists(output_file_path):
         items = parser.parse_items_from_to(first_item_id, last_item_id)
@@ -49,6 +50,7 @@ def parse(
     output_file_path: Annotated[str, typer.Argument()] = "parsed/items.txt",
     data_dir_path: Annotated[str, typer.Argument()] = "extracted",
 ) -> None:
+    Path(output_file_path).parent.mkdir(parents=True, exist_ok=True)
     parser = ItemParser(data_dir_path)
     if ask_overwrite_if_exists(output_file_path):
         item = parser.parse_item(item_id)
