@@ -1,11 +1,14 @@
 # About
-hg2-item-parser is a Python package for parsing [Houkai Gakuen 2](https://houkai2nd.miraheze.org/wiki/Houkai_Gakuen_2_Wiki) items data
+hg2-item-parser is a Python package for parsing [Houkai Gakuen 2](https://houkai2nd.miraheze.org/wiki/Houkai_Gakuen_2_Wiki) items data.
 
 ## Installation
 ### From PyPi
 ```shell
 pip install hg2-item-parser
 ```
+
+## Preparations
+To use this package, you will need a folder containing all item data, which can be downloaded and extracted using another package [hg2-data-extractor](https://github.com/xcvhmq33/hg2-data-extractor). It is recommended to use both packages in the same directory to avoid manually specifying folder paths, as they are designed to create and use directories with compatible names by default.
 
 ## Usage
 To get help, type `--help` with any command or even package
