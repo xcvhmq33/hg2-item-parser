@@ -26,6 +26,14 @@ class ItemParser:
         self.main_data = self._load_main_data()
         self.skill_data = self._load_skill_data()
 
+    def parse_items_from_to(self, first_item_id: int, last_item_id: int) -> list[Item]:
+        items = []
+        for item_id in range(first_item_id, last_item_id + 1):
+            item = self.parse_item(item_id)
+            items.append(item)
+
+        return items
+
     def parse_item(self, item_id: int) -> Item:
         info = self.parse_item_info(item_id)
         property = self.parse_item_property(item_id)
