@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from .exceptions import ItemNotFoundError
 from .info_parser import InfoParser
 from .models import Item, ItemInfo, ItemProperty, ItemSkill
@@ -22,7 +24,7 @@ class ItemParser:
     }
 
     def __init__(self, data_dir_path: str):
-        self.data_dir_path = data_dir_path
+        self.data_dir_path = Path(data_dir_path)
         self.main_data = self._load_main_data()
         self.skill_data = self._load_skill_data()
 
@@ -160,7 +162,7 @@ class ItemParser:
         return data
 
     def _load_data(self, data_file_name: str) -> TSVReader:
-        data_file_path = f"{self.data_dir_path}/{data_file_name}"
+        data_file_path = self.data_dir_path / (data_file_name)
         data = TSVReader(data_file_path)
 
         return data

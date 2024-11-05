@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 class TSVReader:
-    def __init__(self, file_path: str):
+    def __init__(self, file_path: str | Path):
         self.file_path = Path(file_path)
         self.data = self._load_data()
 
