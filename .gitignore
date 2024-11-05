@@ -15,3 +15,6 @@ wheels/
 # data for parsing
 data/*
 !data/TextMap_aio.tsv
+
+# parsed items
+parsed/

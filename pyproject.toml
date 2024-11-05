@@ -6,6 +6,7 @@ requires-python = ">=3.12,<4.0"
 dynamic = ["version"]
 dependencies = [
     "requests<3.0.0,>=2.32.3",
+    "typer<1.0.0,>=0.12.5",
 ]
 
 [project.scripts]
