@@ -5,7 +5,7 @@ from .text_parser import TextParser
 from .unificator import Unificator
 
 
-class SkillParser:
+class BaseSkillParser:
     @classmethod
     def parse_description_template(cls, item_skill_data: dict[str, str]) -> str:
         description_template_id = cls.parse_description_template_id(item_skill_data)
@@ -47,7 +47,7 @@ class SkillParser:
         return title_id
 
 
-class EquipSkillParser(SkillParser):
+class EquipSkillParser(BaseSkillParser):
     FANTASY_LEGEND_IDS = (
         4259,
         4260,
@@ -289,7 +289,7 @@ class EquipSkillParser(SkillParser):
         return skill_count
 
 
-class PetSkillParser(SkillParser):
+class PetSkillParser(BaseSkillParser):
     SKILL_NAMES = (
         "UltraSkillid",
         "HiddenUltraSkillid",
