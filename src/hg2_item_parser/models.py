@@ -73,9 +73,7 @@ class Item:
     skills: list[ItemSkill]
 
     def __str__(self) -> str:
-        info_str = f"INFO\n{self.info}"
-        property_str = f"PROPERTY\n{self.property}"
-        border = f"\n{"-"*15}\n"
-        skills_str = f"SKILLS\n{border.join(str(skill) for skill in self.skills)}"
+        border = "-" * 15
+        skills_str = f"\n{border}\n".join(str(skill) for skill in self.skills)
 
-        return f"{info_str}\n\n{property_str}\n\n{skills_str}"
+        return f"INFO{self.info}\n\nPROPERTY{self.property}\n\nSKILLS{skills_str or "\nNone"}"
