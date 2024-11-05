@@ -2,8 +2,13 @@ from dataclasses import dataclass
 from typing import Literal
 
 
+class BaseItemModel:
+    def __str__(self) -> str:
+        return "\n".join(f"{name}: {value}" for name, value in self.__dict__.items())
+
+
 @dataclass
-class ItemInfo:
+class ItemInfo(BaseItemModel):
     id: int
     title_id: int
     title: str
@@ -14,7 +19,7 @@ class ItemInfo:
 
 
 @dataclass
-class ItemProperty:
+class ItemProperty(BaseItemModel):
     max_lvl: int
 
 
@@ -51,7 +56,7 @@ class PetProperty(ItemProperty):
 
 
 @dataclass
-class ItemSkill:
+class ItemSkill(BaseItemModel):
     id: int
     damage_type: str | None
     title_id: int
@@ -66,3 +71,11 @@ class Item:
     info: ItemInfo
     property: ItemProperty
     skills: list[ItemSkill]
+
+    def __str__(self) -> str:
+        info_str = f"INFO\n{self.info}"
+        property_str = f"PROPERTY\n{self.property}"
+        border = f"\n{"-"*15}\n"
+        skills_str = f"SKILLS\n{border.join(str(skill) for skill in self.skills)}"
+
+        return f"{info_str}\n\n{property_str}\n\n{skills_str}"
