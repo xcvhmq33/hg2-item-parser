@@ -39,7 +39,7 @@ def parse_from_to(
     parser = ItemParser(data_dir_path)
     if ask_overwrite_if_exists(output_file_path):
         items = parser.parse_items_from_to(first_item_id, last_item_id)
-        with Path(output_file_path).open("w") as f:
+        with Path(output_file_path).open("w", encoding="utf-8") as f:
             for item in items:
                 f.write(f"{item}\n\n")
 
@@ -54,7 +54,7 @@ def parse(
     parser = ItemParser(data_dir_path)
     if ask_overwrite_if_exists(output_file_path):
         item = parser.parse_item(item_id)
-        with Path(output_file_path).open("w") as f:
+        with Path(output_file_path).open("w", encoding="utf-8") as f:
             f.write(str(item))
 
 
