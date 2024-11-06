@@ -67,17 +67,23 @@ class ItemParser:
         return item_property
 
     def parse_item_skills(self, item_id: int) -> list[ItemSkill]:
-        item_skills_data = self.search_item_skills_data(item_id)
         item_skills = []
-        for i, item_skill_data in enumerate(item_skills_data, start=1):
-            if item_skill_data["Category"] == "pet":
+        item_main_data = self.search_item_main_data(item_id)
+        item_category = item_main_data["Category"]
+        item_skills_data = self.search_item_skills_data(item_id)
+        if item_category == "pet":
+            for item_skill_data in item_skills_data:
                 item_skill = PetSkillParser.parse_skill(item_skill_data)
-            else:
-                item_main_data = self.search_item_main_data(item_id)
+                item_skills.append(item_skill)
+        else:
+            item_skill_range = EquipSkillParser.parse_skill_range(item_main_data)
+            for skill_num, item_skill_data in zip(
+                item_skill_range, item_skills_data, strict=False
+            ):
                 item_skill = EquipSkillParser.parse_skill(
-                    item_main_data, item_skill_data, i
+                    item_main_data, item_skill_data, skill_num
                 )
-            item_skills.append(item_skill)
+                item_skills.append(item_skill)
 
         return item_skills
 
@@ -106,7 +112,7 @@ class ItemParser:
         for skill_id in skills_id:
             item_skill_data = self.get_item_skill_data(skill_id, item_category)
             if item_skill_data is None:
-                return None
+                continue
             item_skills_data.append(item_skill_data)
 
         return item_skills_data
