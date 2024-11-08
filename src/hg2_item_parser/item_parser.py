@@ -3,22 +3,22 @@ from pathlib import Path
 from tqdm import tqdm
 
 from .data_loader import DataLoader
+from .enums import ItemCategory
 from .exceptions import ItemNotFoundError
 from .info_parser import InfoParser
 from .models import Item, ItemInfo, ItemProperty, ItemSkill
 from .property_parser import PropertyParser
 from .skill_parser import SkillParser
 from .tsvreader import TSVReader
-from .types_ import ItemCategory
 
 
 class ItemParser:
-    MAIN_DATA_FILE_MAP: dict[ItemCategory, str] = {
-        "weapon": "WeaponDataV3.tsv",
-        "costume": "CostumeDataV2.tsv",
-        "badge": "PassiveSkillDataV3.tsv",
-        "pet": "PetData.tsv",
-    }
+    MAIN_DATA_FILE_NAMES = (
+        "WeaponDataV3.tsv",
+        "CostumeDataV2.tsv",
+        "PassiveSkillDataV3.tsv",
+        "PetData.tsv",
+    )
 
     def __init__(self, data_dir_path: str):
         self.data_dir_path = Path(data_dir_path)
@@ -68,7 +68,7 @@ class ItemParser:
         return item_skills
 
     def search_item_main_data(self, item_id: int) -> dict[str, str]:
-        for item_category in self.MAIN_DATA_FILE_MAP:
+        for item_category in ItemCategory:
             item_main_data = self.get_item_main_data(item_id, item_category)
 
             if item_main_data is not None:
@@ -84,12 +84,14 @@ class ItemParser:
             "DisplayNumber", item_id
         )
         if item_main_data is not None:
-            item_main_data["Category"] = item_category
+            item_main_data["Category"] = item_category.value
             return item_main_data
 
         return None
 
     def _load_main_data(self) -> dict[ItemCategory, TSVReader]:
-        data = DataLoader.load_data(self.data_dir_path, self.MAIN_DATA_FILE_MAP)
+        data = DataLoader.load_data(
+            self.data_dir_path, list(ItemCategory), self.MAIN_DATA_FILE_NAMES
+        )
 
         return data

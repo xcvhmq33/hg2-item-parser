@@ -1,12 +1,12 @@
 from pathlib import Path
 
 from .data_loader import DataLoader
+from .enums import ItemCategory, SkillCategory
 from .info_parser import InfoParser
 from .models import ItemSkill
 from .property_parser import PropertyParser
 from .text_parser import TextParser
 from .tsvreader import TSVReader
-from .types_ import SkillCategory
 from .unificator import Unificator
 
 
@@ -285,17 +285,17 @@ class PetSkillParser:
 
 
 class SkillParser:
-    SKILL_DATA_FILE_MAP: dict[SkillCategory, str] = {
-        "equip": "SpecialAttributeDataV2.tsv",
-        "pet": "PetSkillData.tsv",
-    }
+    SKILL_DATA_FILE_NAMES = (
+        "SpecialAttributeDataV2.tsv",
+        "PetSkillData.tsv",
+    )
 
     def __init__(self, data_dir_path: str):
         self.data_dir_path = Path(data_dir_path)
         self.skill_data = self._load_skill_data()
 
     def parse_skills(self, item_main_data: dict[str, str]) -> list[ItemSkill]:
-        if InfoParser.parse_category(item_main_data) == "pet":
+        if InfoParser.parse_category(item_main_data) == ItemCategory.PET:
             skills = self.parse_pet_skills(item_main_data)
         else:
             skills = self.parse_equip_skills(item_main_data)
@@ -304,7 +304,9 @@ class SkillParser:
 
     def parse_equip_skills(self, item_main_data: dict[str, str]) -> list[ItemSkill]:
         equip_skills = []
-        equip_skills_data = self.get_item_skills_data(item_main_data, "equip")
+        equip_skills_data = self.get_item_skills_data(
+            item_main_data, SkillCategory.EQUIP
+        )
         equip_skill_range = EquipSkillParser.parse_skill_range(item_main_data)
         for skill_num, equip_skill_data in zip(
             equip_skill_range, equip_skills_data, strict=False
@@ -316,7 +318,7 @@ class SkillParser:
 
     def parse_pet_skills(self, item_main_data: dict[str, str]) -> list[ItemSkill]:
         pet_skills = []
-        pet_skills_data = self.get_item_skills_data(item_main_data, "pet")
+        pet_skills_data = self.get_item_skills_data(item_main_data, SkillCategory.PET)
         for pet_skill_data in pet_skills_data:
             pet_skill = self.parse_skill(pet_skill_data)
             pet_skills.append(pet_skill)
@@ -327,7 +329,7 @@ class SkillParser:
         self, item_main_data: dict[str, str], skill_category: SkillCategory
     ) -> list[dict[str, str]]:
         item_skills_data = []
-        if skill_category == "pet":
+        if skill_category == SkillCategory.PET:
             skills_id = PetSkillParser.parse_skills_id(item_main_data)
         else:
             skills_id = EquipSkillParser.parse_skills_id(item_main_data)
@@ -445,6 +447,8 @@ class SkillParser:
         return title_id
 
     def _load_skill_data(self) -> dict[SkillCategory, TSVReader]:
-        data = DataLoader.load_data(self.data_dir_path, self.SKILL_DATA_FILE_MAP)
+        data = DataLoader.load_data(
+            self.data_dir_path, list(SkillCategory), self.SKILL_DATA_FILE_NAMES
+        )
 
         return data

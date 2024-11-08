@@ -1,6 +1,6 @@
+from .enums import ItemCategory
 from .models import ItemInfo
 from .text_parser import TextParser
-from .types_ import ItemCategory
 from .unificator import Unificator
 
 
@@ -70,4 +70,4 @@ class InfoParser:
     def parse_category(item_main_data: dict[str, str]) -> ItemCategory:
         category = item_main_data["Category"]
 
-        return category
+        return ItemCategory(category)

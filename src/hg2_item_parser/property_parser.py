@@ -1,5 +1,6 @@
 from typing import Literal
 
+from .enums import ItemCategory
 from .info_parser import InfoParser
 from .models import (
     BadgeProperty,
@@ -16,13 +17,13 @@ class PropertyParser:
     def parse_property(cls, item_main_data: dict[str, str]) -> ItemProperty:
         property: ItemProperty
         match InfoParser.parse_category(item_main_data):
-            case "weapon":
+            case ItemCategory.WEAPON:
                 property = cls.parse_weapon_property(item_main_data)
-            case "costume":
+            case ItemCategory.COSTUME:
                 property = cls.parse_costume_property(item_main_data)
-            case "badge":
+            case ItemCategory.BADGE:
                 property = cls.parse_badge_property(item_main_data)
-            case "pet":
+            case ItemCategory.PET:
                 property = cls.parse_pet_property(item_main_data)
 
         return property
@@ -114,7 +115,7 @@ class PropertyParser:
 
     @staticmethod
     def parse_crit_rate(item_main_data: dict[str, str]) -> str:
-        if InfoParser.parse_category(item_main_data) == "pet":
+        if InfoParser.parse_category(item_main_data) == ItemCategory.PET:
             crit_rate = item_main_data["initCritRate"]
         else:
             crit_rate = item_main_data["CriticalRate"]
@@ -156,7 +157,7 @@ class PropertyParser:
 
     @staticmethod
     def parse_base_damage(item_main_data: dict[str, str]) -> float:
-        if InfoParser.parse_category(item_main_data) == "pet":
+        if InfoParser.parse_category(item_main_data) == ItemCategory.PET:
             base_damage = float(item_main_data["Attack"])
         else:
             base_damage = float(item_main_data["DamageBase"])
@@ -165,7 +166,7 @@ class PropertyParser:
 
     @staticmethod
     def parse_damage_per_lvl(item_main_data: dict[str, str]) -> float:
-        if InfoParser.parse_category(item_main_data) == "pet":
+        if InfoParser.parse_category(item_main_data) == ItemCategory.PET:
             damage_per_lvl = float(item_main_data["Attack_Add"])
         else:
             damage_per_lvl = float(item_main_data["DamageAdd"])
