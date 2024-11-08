@@ -12,7 +12,8 @@ class DataLoader:
         data_file_names: Iterable[str | Path],
     ) -> dict[Hashable, TSVReader]:
         data = {}
-        data_dir_path = Path(data_dir_path)
+        if not isinstance(data_dir_path, Path):
+            data_dir_path = Path(data_dir_path)
         for key, data_file_name in zip(keys, data_file_names, strict=True):
             data[key] = TSVReader(data_dir_path / data_file_name)
 

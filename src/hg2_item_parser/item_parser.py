@@ -20,8 +20,10 @@ class ItemParser:
         "PetData.tsv",
     )
 
-    def __init__(self, data_dir_path: str):
-        self.data_dir_path = Path(data_dir_path)
+    def __init__(self, data_dir_path: str | Path):
+        if not isinstance(data_dir_path, Path):
+            data_dir_path = Path(data_dir_path)
+        self.data_dir_path = data_dir_path
         self.main_data = self._load_main_data()
 
     def parse_items_from_to(self, first_item_id: int, last_item_id: int) -> list[Item]:

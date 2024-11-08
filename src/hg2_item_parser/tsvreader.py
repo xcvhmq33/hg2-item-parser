@@ -4,7 +4,9 @@ from pathlib import Path
 
 class TSVReader:
     def __init__(self, file_path: str | Path):
-        self.file_path = Path(file_path)
+        if not isinstance(file_path, Path):
+            file_path = Path(file_path)
+        self.file_path = file_path
         self.data = self._load_data()
 
     def _load_data(self) -> list[dict[str, str]]:
