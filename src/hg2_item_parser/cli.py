@@ -8,8 +8,10 @@ from .item_parser import ItemParser
 app = typer.Typer()
 
 
-def ask_overwrite_if_exists(file_path: str) -> bool:
-    if Path(file_path).is_file():
+def ask_overwrite_if_exists(file_path: str | Path) -> bool:
+    if not isinstance(file_path, Path):
+        file_path = Path(file_path)
+    if file_path.is_file():
         message = f"{file_path} is already exists, overwrite it? (y/n): "
         overwrite = input(message).lower() == "y"
     else:
@@ -24,7 +26,6 @@ def check(
 ) -> None:
     parser = ItemParser(data_dir_path)
     item = parser.parse_item(item_id)
-
     typer.echo(item)
 
 
@@ -35,13 +36,11 @@ def parse_from_to(
     output_file_path: Annotated[str, typer.Argument()] = "parsed/items.txt",
     data_dir_path: Annotated[str, typer.Argument()] = "extracted",
 ) -> None:
-    Path(output_file_path).parent.mkdir(parents=True, exist_ok=True)
-    parser = ItemParser(data_dir_path)
     if ask_overwrite_if_exists(output_file_path):
-        items = parser.parse_items_from_to(first_item_id, last_item_id)
-        with Path(output_file_path).open("w", encoding="utf-8") as f:
-            for item in items:
-                f.write(f"{item}\n\n")
+        parser = ItemParser(data_dir_path)
+        parser.parse_and_write_items_from_to(
+            first_item_id, last_item_id, output_file_path
+        )
 
 
 @app.command(help="Parses an item")
@@ -50,12 +49,9 @@ def parse(
     output_file_path: Annotated[str, typer.Argument()] = "parsed/items.txt",
     data_dir_path: Annotated[str, typer.Argument()] = "extracted",
 ) -> None:
-    Path(output_file_path).parent.mkdir(parents=True, exist_ok=True)
-    parser = ItemParser(data_dir_path)
     if ask_overwrite_if_exists(output_file_path):
-        item = parser.parse_item(item_id)
-        with Path(output_file_path).open("w", encoding="utf-8") as f:
-            f.write(str(item))
+        parser = ItemParser(data_dir_path)
+        parser.parse_and_write_item(item_id, output_file_path)
 
 
 def main() -> None:

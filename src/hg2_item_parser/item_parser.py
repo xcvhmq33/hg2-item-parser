@@ -26,6 +26,25 @@ class ItemParser:
         self.data_dir_path = data_dir_path
         self.main_data = self._load_main_data()
 
+    def parse_and_write_items_from_to(
+        self, first_item_id: int, last_item_id: int, output_file_path: str | Path
+    ) -> None:
+        if not isinstance(output_file_path, Path):
+            output_file_path = Path(output_file_path)
+        output_file_path.parent.mkdir(parents=True, exist_ok=True)
+        items = self.parse_items_from_to(first_item_id, last_item_id)
+        with output_file_path.open("w", encoding="utf-8") as f:
+            for item in items:
+                f.write(f"{item}\n\n")
+
+    def parse_and_write_item(self, item_id: int, output_file_path: str | Path) -> None:
+        if not isinstance(output_file_path, Path):
+            output_file_path = Path(output_file_path)
+        output_file_path.parent.mkdir(parents=True, exist_ok=True)
+        item = self.parse_item(item_id)
+        with output_file_path.open("w", encoding="utf-8") as f:
+            f.write(str(item))
+
     def parse_items_from_to(self, first_item_id: int, last_item_id: int) -> list[Item]:
         items = []
         for item_id in tqdm(range(first_item_id, last_item_id + 1), desc="Parsing..."):
