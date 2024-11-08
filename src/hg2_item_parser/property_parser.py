@@ -270,10 +270,8 @@ class PropertyParser:
 
     @staticmethod
     def _calculate_value_on_lvl(
-        base_value: float, value_per_lvl: float, lvl: int, precision: int = 0
+        base_value: float, value_per_lvl: float, lvl: int, precision: int | None = None
     ) -> float | int:
         value = round(base_value + value_per_lvl * (lvl - 1), precision)
-        if precision == 0:
-            value = int(value)
 
         return value
