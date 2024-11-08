@@ -39,7 +39,7 @@ def parse_from_to(
     if ask_overwrite_if_exists(output_file_path):
         parser = ItemParser(data_dir_path)
         parser.parse_and_write_items_from_to(
-            first_item_id, last_item_id, output_file_path
+            first_item_id, last_item_id, output_file_path, progressbar=True
         )
 
 
