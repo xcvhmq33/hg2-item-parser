@@ -1,5 +1,6 @@
 from .models import ItemInfo
 from .text_parser import TextParser
+from .types_ import ItemCategory
 from .unificator import Unificator
 
 
@@ -64,3 +65,9 @@ class InfoParser:
         rarity = int(item_main_data["Rarity"])
 
         return rarity
+
+    @staticmethod
+    def parse_category(item_main_data: dict[str, str]) -> ItemCategory:
+        category = item_main_data["Category"]
+
+        return category
