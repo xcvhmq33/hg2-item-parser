@@ -1,12 +1,12 @@
 import csv
 from pathlib import Path
 
+from .utils import to_path
+
 
 class TSVReader:
     def __init__(self, file_path: str | Path):
-        if not isinstance(file_path, Path):
-            file_path = Path(file_path)
-        self.file_path = file_path
+        self.file_path = to_path(file_path)
         self.data = self._load_data()
 
     def _load_data(self) -> list[dict[str, str]]:

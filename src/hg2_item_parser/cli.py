@@ -1,23 +1,11 @@
-from pathlib import Path
 from typing import Annotated
 
 import typer
 
 from .item_parser import ItemParser
+from .utils import ask_overwrite_if_exists
 
 app = typer.Typer()
-
-
-def ask_overwrite_if_exists(file_path: str | Path) -> bool:
-    if not isinstance(file_path, Path):
-        file_path = Path(file_path)
-    if file_path.is_file():
-        message = f"{file_path} is already exists, overwrite it? (y/n): "
-        overwrite = input(message).lower() == "y"
-    else:
-        overwrite = True
-
-    return overwrite
 
 
 @app.command(help="Prints an item to a console")

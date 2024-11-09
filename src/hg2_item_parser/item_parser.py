@@ -10,6 +10,7 @@ from .models import Item, ItemInfo, ItemProperty, ItemSkill
 from .property_parser import PropertyParser
 from .skill_parser import SkillParser
 from .tsvreader import TSVReader
+from .utils import to_path
 
 
 class ItemParser:
@@ -21,9 +22,7 @@ class ItemParser:
     )
 
     def __init__(self, data_dir_path: str | Path):
-        if not isinstance(data_dir_path, Path):
-            data_dir_path = Path(data_dir_path)
-        self.data_dir_path = data_dir_path
+        self.data_dir_path = to_path(data_dir_path)
         self.main_data = self._load_main_data()
 
     def parse_and_write_items_from_to(
@@ -34,8 +33,7 @@ class ItemParser:
         *,
         progressbar: bool = False,
     ) -> None:
-        if not isinstance(output_file_path, Path):
-            output_file_path = Path(output_file_path)
+        output_file_path = to_path(output_file_path)
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
         items = self.parse_items_from_to(
             first_item_id, last_item_id, progressbar=progressbar
@@ -45,8 +43,7 @@ class ItemParser:
                 f.write(f"{item}\n\n")
 
     def parse_and_write_item(self, item_id: int, output_file_path: str | Path) -> None:
-        if not isinstance(output_file_path, Path):
-            output_file_path = Path(output_file_path)
+        output_file_path = to_path(output_file_path)
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
         item = self.parse_item(item_id)
         with output_file_path.open("w", encoding="utf-8") as f:

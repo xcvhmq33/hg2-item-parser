@@ -2,6 +2,7 @@ from collections.abc import Hashable, Iterable
 from pathlib import Path
 
 from .tsvreader import TSVReader
+from .utils import to_path
 
 
 class DataLoader:
@@ -12,8 +13,7 @@ class DataLoader:
         data_file_names: Iterable[str | Path],
     ) -> dict[Hashable, TSVReader]:
         data = {}
-        if not isinstance(data_dir_path, Path):
-            data_dir_path = Path(data_dir_path)
+        data_dir_path = to_path(data_dir_path)
         for key, data_file_name in zip(keys, data_file_names, strict=True):
             data[key] = TSVReader(data_dir_path / data_file_name)
 
