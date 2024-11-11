@@ -25,7 +25,7 @@ class Unificator:
         "spray_enchanting": "Spray",
         "spray_switch": "Switch Spray",
         "throw": "Thrown",
-        0: None,
+        "0": None,
     }
 
     DAMAGE_TYPES = {
