@@ -1,4 +1,4 @@
-from .enums import ItemCategory
+from .enums import DamageType, ItemCategory
 from .models import ItemInfo
 from .text_parser import TextParser
 from .unificator import Unificator
@@ -55,7 +55,7 @@ class InfoParser:
         return image_url
 
     @staticmethod
-    def parse_damage_type(item_main_data: dict[str, str]) -> str | None:
+    def parse_damage_type(item_main_data: dict[str, str]) -> DamageType:
         damage_type = item_main_data.get("DamageType", "none")
 
         return Unificator.unificate_damage_type(damage_type)

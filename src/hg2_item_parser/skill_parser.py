@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from .data_loader import DataLoader
-from .enums import ItemCategory, SkillCategory
+from .enums import DamageType, ItemCategory, SkillCategory
 from .info_parser import InfoParser
 from .models import ItemSkill
 from .property_parser import PropertyParser
@@ -429,7 +429,7 @@ class SkillParser:
         return skill_id
 
     @staticmethod
-    def parse_damage_type(item_skill_data: dict[str, str]) -> str | None:
+    def parse_damage_type(item_skill_data: dict[str, str]) -> DamageType:
         damage_type = item_skill_data.get("Feature", "none")
 
         return Unificator.unificate_damage_type(damage_type)

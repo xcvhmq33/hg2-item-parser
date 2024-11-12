@@ -1,5 +1,7 @@
 from typing import Literal
 
+from .enums import DamageType
+
 
 class Unificator:
     WEAPON_TYPES = {
@@ -29,23 +31,23 @@ class Unificator:
     }
 
     DAMAGE_TYPES = {
-        "1": "Physical",
-        "2": "Fire",
-        "3": "Ice",
-        "4": "Energy",
-        "5": "Light",
-        "6": "Poison",
-        "physic": "Physical",
-        "pure": "Physical",
-        "fire": "Fire",
-        "snow": "Ice",
-        "ice": "Ice",
-        "power": "Energy",
-        "light": "Light",
-        "poison": "Poison",
-        "none": None,
-        "null": None,
-        ";": None,
+        "1": DamageType.PHYSICAL,
+        "physic": DamageType.PHYSICAL,
+        "pure": DamageType.PHYSICAL,
+        "2": DamageType.FIRE,
+        "fire": DamageType.FIRE,
+        "3": DamageType.ICE,
+        "snow": DamageType.ICE,
+        "ice": DamageType.ICE,
+        "4": DamageType.ENERGY,
+        "power": DamageType.ENERGY,
+        "5": DamageType.LIGHT,
+        "light": DamageType.LIGHT,
+        "6": DamageType.POISON,
+        "poison": DamageType.POISON,
+        "none": DamageType.NONE,
+        "null": DamageType.NONE,
+        ";": DamageType.NONE,
     }
 
     @classmethod
@@ -53,5 +55,5 @@ class Unificator:
         return cls.WEAPON_TYPES.get(weapon_type, "Unknown")
 
     @classmethod
-    def unificate_damage_type(cls, damage_type: str) -> str | None | Literal["Unknown"]:
-        return cls.DAMAGE_TYPES.get(damage_type, "Unknown")
+    def unificate_damage_type(cls, damage_type: str) -> DamageType:
+        return cls.DAMAGE_TYPES[damage_type]

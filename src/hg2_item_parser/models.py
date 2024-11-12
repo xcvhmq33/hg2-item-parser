@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Literal
 
+from .enums import DamageType
+
 
 class BaseItemModel:
     def __str__(self) -> str:
@@ -14,7 +16,7 @@ class ItemInfo(BaseItemModel):
     title: str
     image_id: int
     image_url: str
-    damage_type: str | None
+    damage_type: DamageType
     rarity: int
 
 
@@ -58,7 +60,7 @@ class PetProperty(ItemProperty):
 @dataclass
 class ItemSkill(BaseItemModel):
     id: int
-    damage_type: str | None
+    damage_type: DamageType
     title_id: int
     title: str
     description_template_id: int
