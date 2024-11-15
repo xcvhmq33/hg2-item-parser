@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Literal
 
-from .enums import DamageType
+from .enums import DamageType, WeaponType
 
 
 class BaseItemModel:
@@ -21,40 +21,19 @@ class ItemInfo(BaseItemModel):
 
 
 @dataclass
-class ItemProperty(BaseItemModel):
+class ItemProperties(BaseItemModel):
     max_lvl: int
-
-
-@dataclass
-class WeaponProperty(ItemProperty):
-    cost: int
-    max_lvl_hp: int | float
-    type: str | None
-    max_lvl_damage: int | float
-    max_lvl_ammo: int | float | Literal["∞"]
-    max_lvl_atk_speed: float
-    deploy_limit: int
-    duration: float
-    crit_rate: float
-
-
-@dataclass
-class CostumeProperty(ItemProperty):
-    cost: int
-    max_lvl_hp: int | float
-
-
-@dataclass
-class BadgeProperty(ItemProperty):
-    cost: int
-
-
-@dataclass
-class PetProperty(ItemProperty):
-    max_lvl_damage: int | float
-    crit_rate: float
-    base_sync: int | float
-    max_sync: int | float
+    cost: int | None = None
+    max_lvl_damage: int | None = None
+    max_lvl_ammo: int | Literal["∞"] | None = None
+    max_lvl_atk_speed: float | None = None
+    max_lvl_hp: int | None = None
+    weapon_type: WeaponType | None = None
+    deploy_limit: int | None = None
+    duration: float | None = None
+    crit_rate: float | None = None
+    base_sync: int | None = None
+    max_sync: int | None = None
 
 
 @dataclass
@@ -71,7 +50,7 @@ class ItemSkill(BaseItemModel):
 @dataclass
 class Item:
     info: ItemInfo
-    property: ItemProperty
+    properties: ItemProperties
     skills: list[ItemSkill]
 
     def __str__(self) -> str:
@@ -80,6 +59,6 @@ class Item:
 
         return (
             f"INFO\n{self.info}\n\n"
-            f"PROPERTY\n{self.property}\n\n"
+            f"PROPERTIES\n{self.properties}\n\n"
             f"SKILLS\n{skills_str or None}"
         )

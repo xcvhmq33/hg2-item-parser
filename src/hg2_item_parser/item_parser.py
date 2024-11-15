@@ -6,7 +6,7 @@ from .data_loader import DataLoader
 from .enums import ItemCategory
 from .exceptions import ItemNotFoundError
 from .info_parser import InfoParser
-from .models import Item, ItemInfo, ItemProperty, ItemSkill
+from .models import Item, ItemInfo, ItemProperties, ItemSkill
 from .property_parser import PropertyParser
 from .skill_parser import SkillParser
 from .tsvreader import TSVReader
@@ -85,9 +85,9 @@ class ItemParser:
 
         return item_info
 
-    def parse_item_property(self, item_id: int) -> ItemProperty:
+    def parse_item_property(self, item_id: int) -> ItemProperties:
         item_main_data = self.search_item_main_data(item_id)
-        item_property = PropertyParser.parse_property(item_main_data)
+        item_property = PropertyParser.parse_properties(item_main_data)
 
         return item_property
 
