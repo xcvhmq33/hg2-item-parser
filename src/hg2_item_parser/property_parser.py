@@ -1,6 +1,6 @@
 from typing import Literal
 
-from .enums import ItemCategory
+from .enums import ItemCategory, WeaponType
 from .info_parser import InfoParser
 from .models import (
     BadgeProperty,
@@ -102,7 +102,7 @@ class PropertyParser:
         return cost
 
     @staticmethod
-    def parse_weapon_type(item_main_data: dict[str, str]) -> str | None:
+    def parse_weapon_type(item_main_data: dict[str, str]) -> WeaponType:
         weapon_type = item_main_data["BaseType"]
 
         return Unificator.unificate_weapon_type(weapon_type)
