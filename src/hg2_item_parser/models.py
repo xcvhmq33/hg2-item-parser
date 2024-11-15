@@ -35,7 +35,7 @@ class WeaponProperty(ItemProperty):
     max_lvl_atk_speed: float
     deploy_limit: int
     duration: float
-    crit_rate: str
+    crit_rate: float
 
 
 @dataclass
@@ -52,7 +52,7 @@ class BadgeProperty(ItemProperty):
 @dataclass
 class PetProperty(ItemProperty):
     max_lvl_damage: int | float
-    crit_rate: str
+    crit_rate: float
     base_sync: int | float
     max_sync: int | float
 

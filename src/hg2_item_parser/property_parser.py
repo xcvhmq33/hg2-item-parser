@@ -114,12 +114,11 @@ class PropertyParser:
         return deploy_limit
 
     @staticmethod
-    def parse_crit_rate(item_main_data: dict[str, str]) -> str:
+    def parse_crit_rate(item_main_data: dict[str, str]) -> float:
         if InfoParser.parse_category(item_main_data) == ItemCategory.PET:
-            crit_rate = item_main_data["initCritRate"]
+            crit_rate = float(item_main_data["initCritRate"])
         else:
-            crit_rate = item_main_data["CriticalRate"]
-        crit_rate = str(round(float(crit_rate) * 100, 1)) + "%"
+            crit_rate = float(item_main_data["CriticalRate"])
 
         return crit_rate
 
