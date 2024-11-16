@@ -1,5 +1,3 @@
-from typing import Literal
-
 from .enums import ItemCategory, WeaponType
 from .info_parser import InfoParser
 from .models import ItemProperties
@@ -129,17 +127,13 @@ class PropertyParser:
         return damage_per_lvl
 
     @classmethod
-    def parse_max_lvl_ammo(
-        cls, item_main_data: dict[str, str]
-    ) -> int | Literal["∞"] | None:
+    def parse_max_lvl_ammo(cls, item_main_data: dict[str, str]) -> int | None:
         base_ammo = cls.parse_base_ammo(item_main_data)
         ammo_per_level = cls.parse_ammo_per_lvl(item_main_data)
         if base_ammo is None or ammo_per_level is None:
             return None
         max_lvl = cls.parse_max_lvl(item_main_data)
         max_lvl_ammo = cls._calculate_value_on_lvl(base_ammo, ammo_per_level, max_lvl)
-        if int(max_lvl_ammo) == -1:
-            return "∞"
 
         return int(max_lvl_ammo) or None
 

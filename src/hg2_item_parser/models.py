@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Literal
 
 from .enums import DamageType, WeaponType
 
@@ -25,7 +24,7 @@ class ItemProperties(BaseItemModel):
     max_lvl: int
     cost: int | None = None
     max_lvl_damage: int | None = None
-    max_lvl_ammo: int | Literal["∞"] | None = None
+    max_lvl_ammo: int | None = None
     max_lvl_atk_speed: float | None = None
     max_lvl_hp: int | None = None
     weapon_type: WeaponType | None = None
