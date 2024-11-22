@@ -95,7 +95,8 @@ class ItemParser:
             if item_main_data is not None:
                 return item_main_data
 
-        raise ItemNotFoundError(item_id)
+        msg = f"Item not found: {item_id}"
+        raise ItemNotFoundError(msg, item_id=item_id)
 
     def get_item_main_data(
         self, item_id: int | str, item_category: ItemCategory

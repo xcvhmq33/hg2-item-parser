@@ -1,8 +1,8 @@
-class BaseItemError(Exception): ...
+class BaseParserError(Exception): ...
 
 
-class ItemNotFoundError(BaseItemError):
-    def __init__(self, item_id: int):
+class ItemNotFoundError(BaseParserError):
+    def __init__(self, msg: str, *, item_id: int | None = None):
         self.item_id = item_id
-        self.msg = f"Item with ID={item_id} not found"
+        self.msg = msg
         super().__init__(self.msg)
