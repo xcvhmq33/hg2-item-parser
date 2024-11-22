@@ -16,11 +16,11 @@ class TextParser:
     en_re: dict[str, str] = requests.get(en_re_url).json()
 
     @classmethod
-    def parse_text(cls, text_id: str | int) -> str | Literal["No translation yet"]:
+    def parse_text(cls, text_id: str | int) -> str | Literal["XXX"]:
         text_en_re = cls.parse_text_en_re(text_id)
         text_textmap = cls.parse_text_textmap(text_id)
 
-        return text_en_re or text_textmap or "No translation yet"
+        return text_en_re or text_textmap or "XXX"
 
     @classmethod
     def parse_text_en_re(cls, text_id: str | int) -> str | None:
