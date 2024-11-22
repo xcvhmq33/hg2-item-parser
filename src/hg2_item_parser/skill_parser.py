@@ -8,7 +8,6 @@ from .property_parser import PropertyParser
 from .text_parser import TextParser
 from .tsvreader import TSVReader
 from .unificator import Unificator
-from .utils import to_path
 
 
 class EquipSkillParser:
@@ -291,8 +290,8 @@ class SkillParser:
         "PetSkillData.tsv",
     )
 
-    def __init__(self, data_dir_path: str | Path):
-        self.data_dir_path = to_path(data_dir_path)
+    def __init__(self, data_dir_path: Path):
+        self.data_dir_path = data_dir_path
         self.skill_data = self._load_skill_data()
 
     def parse_skills(self, item_main_data: dict[str, str]) -> list[ItemSkill]:

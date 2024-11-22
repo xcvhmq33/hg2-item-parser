@@ -10,7 +10,6 @@ from .models import Item, ItemInfo, ItemProperties, ItemSkill
 from .property_parser import PropertyParser
 from .skill_parser import SkillParser
 from .tsvreader import TSVReader
-from .utils import to_path
 
 
 class ItemParser:
@@ -21,19 +20,18 @@ class ItemParser:
         "PetData.tsv",
     )
 
-    def __init__(self, data_dir_path: str | Path):
-        self.data_dir_path = to_path(data_dir_path)
+    def __init__(self, data_dir_path: Path):
+        self.data_dir_path = data_dir_path
         self.main_data = self._load_main_data()
 
     def parse_and_write_items_from_to(
         self,
         first_item_id: int,
         last_item_id: int,
-        output_file_path: str | Path,
+        output_file_path: Path,
         *,
         progressbar: bool = False,
     ) -> None:
-        output_file_path = to_path(output_file_path)
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
         items = self.parse_items_from_to(
             first_item_id, last_item_id, progressbar=progressbar
@@ -42,8 +40,7 @@ class ItemParser:
             for item in items:
                 f.write(f"{item}\n\n")
 
-    def parse_and_write_item(self, item_id: int, output_file_path: str | Path) -> None:
-        output_file_path = to_path(output_file_path)
+    def parse_and_write_item(self, item_id: int, output_file_path: Path) -> None:
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
         item = self.parse_item(item_id)
         with output_file_path.open("w", encoding="utf-8") as f:

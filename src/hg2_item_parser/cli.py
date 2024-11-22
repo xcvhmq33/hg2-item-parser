@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Annotated
 
 import typer
@@ -10,7 +11,7 @@ app = typer.Typer()
 
 @app.command(help="Prints an item to a console")
 def check(
-    item_id: int, data_dir_path: Annotated[str, typer.Argument()] = "extracted"
+    item_id: int, data_dir_path: Annotated[Path, typer.Argument()] = Path("extracted")
 ) -> None:
     parser = ItemParser(data_dir_path)
     item = parser.parse_item(item_id)
@@ -21,8 +22,8 @@ def check(
 def parse_from_to(
     first_item_id: int,
     last_item_id: int,
-    output_file_path: Annotated[str, typer.Argument()] = "parsed/items.txt",
-    data_dir_path: Annotated[str, typer.Argument()] = "extracted",
+    output_file_path: Annotated[Path, typer.Argument()] = Path("parsed/items.txt"),
+    data_dir_path: Annotated[Path, typer.Argument()] = Path("extracted"),
 ) -> None:
     if ask_overwrite_if_exists(output_file_path):
         parser = ItemParser(data_dir_path)
@@ -34,8 +35,8 @@ def parse_from_to(
 @app.command(help="Parses an item")
 def parse(
     item_id: int,
-    output_file_path: Annotated[str, typer.Argument()] = "parsed/items.txt",
-    data_dir_path: Annotated[str, typer.Argument()] = "extracted",
+    output_file_path: Annotated[Path, typer.Argument()] = Path("parsed/items.txt"),
+    data_dir_path: Annotated[Path, typer.Argument()] = Path("extracted"),
 ) -> None:
     if ask_overwrite_if_exists(output_file_path):
         parser = ItemParser(data_dir_path)
