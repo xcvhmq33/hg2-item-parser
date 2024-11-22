@@ -13,31 +13,31 @@ from .tsvreader import TSVReader
 
 
 class ItemParser:
-    def __init__(self, data_dir_path: Path):
-        self.data_dir_path = data_dir_path
+    def __init__(self, data_dir: Path):
+        self.data_dir = data_dir
         self.main_data = self._load_main_data()
 
     def parse_and_write_items_from_to(
         self,
         first_item_id: int,
         last_item_id: int,
-        output_file_path: Path,
+        output: Path,
         *,
         progressbar: bool = False,
     ) -> None:
-        output_file_path.parent.mkdir(parents=True, exist_ok=True)
+        output.parent.mkdir(parents=True, exist_ok=True)
         items = self.parse_items_from_to(
             first_item_id, last_item_id, progressbar=progressbar
         )
-        with output_file_path.open("w", encoding="utf-8") as f:
+        with output.open("w", encoding="utf-8") as file:
             for item in items:
-                f.write(f"{item}\n\n")
+                file.write(f"{item}\n\n")
 
-    def parse_and_write_item(self, item_id: int, output_file_path: Path) -> None:
-        output_file_path.parent.mkdir(parents=True, exist_ok=True)
+    def parse_and_write_item(self, item_id: int, output: Path) -> None:
+        output.parent.mkdir(parents=True, exist_ok=True)
         item = self.parse_item(item_id)
-        with output_file_path.open("w", encoding="utf-8") as f:
-            f.write(str(item))
+        with output.open("w", encoding="utf-8") as file:
+            file.write(str(item))
 
     def parse_items_from_to(
         self, first_item_id: int, last_item_id: int, *, progressbar: bool = False
@@ -83,7 +83,7 @@ class ItemParser:
 
     def parse_item_skills(self, item_id: int) -> list[ItemSkill]:
         item_main_data = self.search_item_main_data(item_id)
-        skill_parser = SkillParser(self.data_dir_path)
+        skill_parser = SkillParser(self.data_dir)
         item_skills = skill_parser.parse_skills(item_main_data)
 
         return item_skills
@@ -112,7 +112,7 @@ class ItemParser:
 
     def _load_main_data(self) -> dict[ItemCategory, TSVReader]:
         data = DataLoader.load_data(
-            self.data_dir_path,
+            self.data_dir,
             list(ItemCategory),
             (f"{data.value}.tsv" for data in ItemData),
         )

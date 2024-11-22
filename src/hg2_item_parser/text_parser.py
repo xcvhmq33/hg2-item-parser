@@ -37,38 +37,36 @@ class TextParser:
         return None
 
     @staticmethod
-    def fill_skill_description_template(
-        skill_description_template: str,
-        skill_max_lvl_values: list[float],
-        skill_max_break_values: list[float],
+    def fill_description_template(
+        description_template: str,
+        max_lvl_values: list[float],
+        max_up_values: list[float],
     ) -> str:
-        skill_description = re.sub(r"# ?!?ALB ?\(\d+\)", "", skill_description_template)
-        skill_description = skill_description.replace("#n", "")
-        skill_description = skill_description.replace(" %", "%")
+        description = re.sub(r"# ?!?ALB ?\(\d+\)", "", description_template)
+        description = description.replace("#n", "")
+        description = description.replace(" %", "%")
 
-        for i, skill_max_lvl_value, skill_max_break_value in zip(
-            range(1, 7), skill_max_lvl_values, skill_max_break_values, strict=False
+        for i, max_lvl_value, max_up_value in zip(
+            range(1, 7), max_lvl_values, max_up_values, strict=False
         ):
-            if f"#{i}%" in skill_description:
-                skill_max_lvl_value *= 100
-                skill_max_break_value *= 100
+            if f"#{i}%" in description:
+                max_lvl_value *= 100
+                max_up_value *= 100
 
-            match = re.search(rf"([1-9]+)#{i}", skill_description)
+            match = re.search(rf"([1-9]+)#{i}", description)
             if match is not None:
                 mul = match.group(1)
-                skill_max_lvl_value *= int(mul)
-                skill_max_break_value *= int(mul)
+                max_lvl_value *= int(mul)
+                max_up_value *= int(mul)
             else:
                 mul = ""
 
-            skill_fill_value = f"{skill_max_lvl_value:g}"
-            if skill_max_lvl_value != skill_max_break_value:
-                skill_fill_value += f"({skill_max_break_value:g})"
+            fill_value = f"{max_lvl_value:g}"
+            if max_lvl_value != max_up_value:
+                fill_value += f"({max_up_value:g})"
 
-            skill_description = skill_description.replace(
-                f"{mul}#{i}", skill_fill_value
-            )
+            description = description.replace(f"{mul}#{i}", fill_value)
 
-        skill_description = skill_description.strip()
+        description = description.strip()
 
-        return skill_description
+        return description

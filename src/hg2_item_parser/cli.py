@@ -33,11 +33,11 @@ def parse_from_to(
 @app.command(help="Parses an item")
 def parse(
     item_id: int,
-    output_file_path: Annotated[Path, typer.Argument()] = Path("parsed/items.txt"),
-    data_dir_path: Annotated[Path, typer.Argument()] = Path("extracted"),
+    output: Annotated[Path, typer.Argument()] = Path("parsed/items.txt"),
+    data_dir: Annotated[Path, typer.Argument()] = Path("extracted"),
 ) -> None:
-    parser = ItemParser(data_dir_path)
-    parser.parse_and_write_item(item_id, output_file_path)
+    parser = ItemParser(data_dir)
+    parser.parse_and_write_item(item_id, output)
 
 
 def main() -> None:

@@ -395,7 +395,7 @@ class SkillParser:
             max_up_values = PetSkillParser.parse_max_up_values(item_skill_data)
             max_lvl_values = PetSkillParser.parse_values(item_skill_data)
         description_template = cls.parse_description_template(item_skill_data)
-        description = TextParser.fill_skill_description_template(
+        description = TextParser.fill_description_template(
             description_template, max_lvl_values, max_up_values
         )
 
