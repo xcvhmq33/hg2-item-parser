@@ -13,6 +13,18 @@ class SkillCategory(Enum):
     PET = "pet"
 
 
+class ItemData(Enum):
+    WEAPON = "WeaponDataV3"
+    COSTUME = "CostumeDataV2"
+    BADGE = "PassiveSkillDataV3"
+    PET = "PetData"
+
+
+class SkillData(Enum):
+    EQUIP = "SpecialAttributeDataV2"
+    PET = "PetSkillData"
+
+
 class DamageType(Enum):
     PHYSICAL = "Physical"
     FIRE = "Fire"

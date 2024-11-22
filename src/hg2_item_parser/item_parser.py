@@ -3,7 +3,7 @@ from pathlib import Path
 from tqdm import tqdm
 
 from .data_loader import DataLoader
-from .enums import ItemCategory
+from .enums import ItemCategory, ItemData
 from .exceptions import ItemNotFoundError
 from .info_parser import InfoParser
 from .models import Item, ItemInfo, ItemProperties, ItemSkill
@@ -13,13 +13,6 @@ from .tsvreader import TSVReader
 
 
 class ItemParser:
-    MAIN_DATA_FILE_NAMES = (
-        "WeaponDataV3.tsv",
-        "CostumeDataV2.tsv",
-        "PassiveSkillDataV3.tsv",
-        "PetData.tsv",
-    )
-
     def __init__(self, data_dir_path: Path):
         self.data_dir_path = data_dir_path
         self.main_data = self._load_main_data()
@@ -119,7 +112,9 @@ class ItemParser:
 
     def _load_main_data(self) -> dict[ItemCategory, TSVReader]:
         data = DataLoader.load_data(
-            self.data_dir_path, list(ItemCategory), self.MAIN_DATA_FILE_NAMES
+            self.data_dir_path,
+            list(ItemCategory),
+            (f"{data.value}.tsv" for data in ItemData),
         )
 
         return data

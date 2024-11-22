@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from .data_loader import DataLoader
-from .enums import DamageType, ItemCategory, SkillCategory
+from .enums import DamageType, ItemCategory, SkillCategory, SkillData
 from .info_parser import InfoParser
 from .models import ItemSkill
 from .property_parser import PropertyParser
@@ -285,11 +285,6 @@ class PetSkillParser:
 
 
 class SkillParser:
-    SKILL_DATA_FILE_NAMES = (
-        "SpecialAttributeDataV2.tsv",
-        "PetSkillData.tsv",
-    )
-
     def __init__(self, data_dir_path: Path):
         self.data_dir_path = data_dir_path
         self.skill_data = self._load_skill_data()
@@ -448,7 +443,9 @@ class SkillParser:
 
     def _load_skill_data(self) -> dict[SkillCategory, TSVReader]:
         data = DataLoader.load_data(
-            self.data_dir_path, list(SkillCategory), self.SKILL_DATA_FILE_NAMES
+            self.data_dir_path,
+            list(SkillCategory),
+            (f"{data.value}.tsv" for data in SkillData),
         )
 
         return data
