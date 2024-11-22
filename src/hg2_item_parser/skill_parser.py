@@ -74,7 +74,7 @@ class EquipSkillParser:
         max_lvl_value = cls.parse_max_lvl_value(item_main_data, skill_num, param_num)
         value_per_up = cls.parse_value_per_up(item_skill_data, slot_num, param_num)
         max_up_value = PropertyParser._calculate_value_on_lvl(
-            max_lvl_value, value_per_up, max_up + 1, 5
+            max_lvl_value, value_per_up, max_up + 1, precision=3
         )
 
         return max_up_value
@@ -114,7 +114,7 @@ class EquipSkillParser:
         value_per_lvl = cls.parse_value_per_lvl(item_main_data, skill_num, param_num)
         max_lvl = PropertyParser.parse_max_lvl(item_main_data)
         max_lvl_value = PropertyParser._calculate_value_on_lvl(
-            base_value, value_per_lvl, max_lvl, 5
+            base_value, value_per_lvl, max_lvl, precision=3
         )
 
         return max_lvl_value
@@ -234,7 +234,7 @@ class PetSkillParser:
         value = cls.parse_value(item_skill_data, param_num)
         value_per_up = cls.parse_value_per_up(item_skill_data, param_num)
         max_up_value = PropertyParser._calculate_value_on_lvl(
-            value, value_per_up, max_up + 1, 5
+            value, value_per_up, max_up + 1, precision=3
         )
 
         return max_up_value

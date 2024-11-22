@@ -157,7 +157,7 @@ class PropertyParser:
             return None
         max_lvl = cls.parse_max_lvl(item_main_data)
         max_lvl_atk_speed = cls._calculate_value_on_lvl(
-            base_atk_speed, atk_speed_per_lvl, max_lvl, 3
+            base_atk_speed, atk_speed_per_lvl, max_lvl, precision=3
         )
 
         return float(max_lvl_atk_speed) or None
@@ -182,7 +182,7 @@ class PropertyParser:
             return None
         max_lvl = cls.parse_max_lvl(item_main_data)
         max_lvl_duration = cls._calculate_value_on_lvl(
-            base_duration, duration_per_lvl, max_lvl, 2
+            base_duration, duration_per_lvl, max_lvl, precision=2
         )
 
         return float(max_lvl_duration) or None
@@ -249,6 +249,7 @@ class PropertyParser:
         base_value: int | float,
         value_per_lvl: int | float,
         lvl: int,
+        *,
         precision: int | None = None,
     ) -> int | float:
         value = round(base_value + value_per_lvl * (lvl - 1), precision)
