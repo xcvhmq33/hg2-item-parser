@@ -4,7 +4,6 @@ from typing import Annotated
 import typer
 
 from .item_parser import ItemParser
-from .utils import ask_overwrite_if_exists
 
 app = typer.Typer()
 
@@ -25,11 +24,10 @@ def parse_from_to(
     output_file_path: Annotated[Path, typer.Argument()] = Path("parsed/items.txt"),
     data_dir_path: Annotated[Path, typer.Argument()] = Path("extracted"),
 ) -> None:
-    if ask_overwrite_if_exists(output_file_path):
-        parser = ItemParser(data_dir_path)
-        parser.parse_and_write_items_from_to(
-            first_item_id, last_item_id, output_file_path, progressbar=True
-        )
+    parser = ItemParser(data_dir_path)
+    parser.parse_and_write_items_from_to(
+        first_item_id, last_item_id, output_file_path, progressbar=True
+    )
 
 
 @app.command(help="Parses an item")
@@ -38,9 +36,8 @@ def parse(
     output_file_path: Annotated[Path, typer.Argument()] = Path("parsed/items.txt"),
     data_dir_path: Annotated[Path, typer.Argument()] = Path("extracted"),
 ) -> None:
-    if ask_overwrite_if_exists(output_file_path):
-        parser = ItemParser(data_dir_path)
-        parser.parse_and_write_item(item_id, output_file_path)
+    parser = ItemParser(data_dir_path)
+    parser.parse_and_write_item(item_id, output_file_path)
 
 
 def main() -> None:
