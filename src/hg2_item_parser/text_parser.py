@@ -10,8 +10,8 @@ from .tsvreader import TSVReader
 class TextParser:
     with importlib.resources.path(
         "hg2_item_parser.resources", "TextMap_aio.tsv"
-    ) as resource_path:
-        textmap = TSVReader(resource_path)
+    ) as resource:
+        textmap = TSVReader(resource)
     en_re_url = "http://ggz.amaryllisworks.pw:18880/en_re"
     en_re: dict[str, str] = requests.get(en_re_url).json()
 

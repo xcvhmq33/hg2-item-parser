@@ -285,8 +285,8 @@ class PetSkillParser:
 
 
 class SkillParser:
-    def __init__(self, data_dir_path: Path):
-        self.data_dir_path = data_dir_path
+    def __init__(self, data_dir: Path):
+        self.data_dir = data_dir
         self.skill_data = self._load_skill_data()
 
     def parse_skills(self, item_main_data: dict[str, str]) -> list[ItemSkill]:
@@ -443,7 +443,7 @@ class SkillParser:
 
     def _load_skill_data(self) -> dict[SkillCategory, TSVReader]:
         data = DataLoader.load_data(
-            self.data_dir_path,
+            self.data_dir,
             list(SkillCategory),
             (f"{data.value}.tsv" for data in SkillData),
         )
