@@ -17,7 +17,7 @@ hg2-item-parser = "hg2_item_parser.__main__:main"
 dev-dependencies = [
     "mypy<2.0.0,>=1.12.0",
     "pre-commit<5.0.0,>=4.0.1",
-    "ruff<1.0.0,>=0.6.9",
+    "ruff>=0.8.2,<1.0.0",
     "types-passlib<2.0.0,>=1.7.7.20240819",
 ]
 
