@@ -18,7 +18,7 @@ dev-dependencies = [
     "mypy<2.0.0,>=1.12.0",
     "pre-commit<5.0.0,>=4.0.1",
     "ruff>=0.8.2,<1.0.0",
-    "types-passlib<2.0.0,>=1.7.7.20240819",
+    "types-requests>=2.32.0.20241016",
 ]
 
 [build-system]
@@ -61,6 +61,8 @@ select = [
 ]
 ignore = [
     "ANN204", # missing-return-type-special-method (dunder methods)
+    "ANN401", # any-type
+    "B904", # raise-without-from-inside-except
 ]
 
 [tool.ruff.format]

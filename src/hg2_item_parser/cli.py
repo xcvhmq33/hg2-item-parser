@@ -1,6 +1,7 @@
 import functools
+from collections.abc import Callable
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Any
 
 import typer
 
@@ -24,10 +25,12 @@ item_id_argument = typer.Argument(
     help="Ingame item id",
 )
 
+DataDirOption = Annotated[Path, data_dir_option]
 
-def handle_errors(func):
+
+def handle_errors(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: tuple[Any], **kwargs: dict[Any, Any]) -> Any:
         try:
             return func(*args, **kwargs)
         except Exception as e:
@@ -37,11 +40,11 @@ def handle_errors(func):
     return wrapper
 
 
-@app.command()
+@app.command()  # type: ignore
 @handle_errors
 def check(
     item_id: Annotated[int, item_id_argument],
-    data_dir: Annotated[Path, data_dir_option] = Path("extracted"),
+    data_dir: DataDirOption = Path("extracted"),
 ) -> None:
     """
     Parses and prints a single item by ID.
@@ -51,7 +54,7 @@ def check(
     typer.echo(item)
 
 
-@app.command()
+@app.command()  # type: ignore
 @handle_errors
 def parse(
     item_id: Annotated[int | None, item_id_argument] = None,
@@ -67,10 +70,7 @@ def parse(
         Path,
         output_option,
     ] = Path("parsed/items.txt"),
-    data_dir: Annotated[
-        Path,
-        data_dir_option,
-    ] = Path("extracted"),
+    data_dir: DataDirOption = Path("extracted"),
 ) -> None:
     """
     Parses and writes a single item or a range of items by ID(s).

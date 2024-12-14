@@ -118,4 +118,4 @@ class ItemParser:
             (f"{data.value}.tsv" for data in ItemData),
         )
 
-        return data
+        return data  # type: ignore

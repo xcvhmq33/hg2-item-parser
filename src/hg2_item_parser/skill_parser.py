@@ -448,4 +448,4 @@ class SkillParser:
             (f"{data.value}.tsv" for data in SkillData),
         )
 
-        return data
+        return data  # type: ignore
